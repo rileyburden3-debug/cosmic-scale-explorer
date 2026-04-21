@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0062)https://cosmic-scale-explorer.vercel.app/?a=earth&b=betelgeuse -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cosmic Scale Explorer</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
   :root {
     --void: #02020a;
@@ -175,6 +175,35 @@
   .share-btn:hover { background:rgba(74,240,255,.18); box-shadow:0 0 12px rgba(74,240,255,.2); }
   .share-btn.copied { border-color:var(--accent); background:rgba(74,240,255,.2); color:#fff; }
 
+  /* ── FUN FACT ── */
+  .funfact-wrap {
+    position:relative; z-index:10;
+    max-width:860px; margin:-8px auto 20px;
+    display:none;
+  }
+  .funfact-wrap.visible { display:block; }
+  .funfact-box {
+    background:rgba(192,132,252,.07);
+    border:1px solid rgba(192,132,252,.3);
+    border-radius:6px; padding:18px 22px;
+  }
+  .funfact-header {
+    font-family:'Orbitron',sans-serif; font-size:.55rem; letter-spacing:.2em;
+    color:var(--accent3); text-transform:uppercase; margin-bottom:10px;
+  }
+  .funfact-text { font-size:.68rem; color:var(--text); line-height:1.9; }
+  .funfact-loading { font-size:.64rem; color:var(--dim); letter-spacing:.08em; animation:pulse-dim 1.2s ease-in-out infinite; }
+  @keyframes pulse-dim { 0%,100%{opacity:.4;} 50%{opacity:1;} }
+  .funfact-btn {
+    font-family:'Orbitron',sans-serif; font-size:.55rem; letter-spacing:.12em;
+    padding:7px 16px; border:1px solid rgba(192,132,252,.4);
+    background:rgba(192,132,252,.08); color:var(--accent3);
+    cursor:pointer; border-radius:3px; text-transform:uppercase;
+    transition:all .2s; margin-top:12px; display:inline-block;
+  }
+  .funfact-btn:hover { background:rgba(192,132,252,.2); box-shadow:0 0 12px rgba(192,132,252,.25); }
+  .funfact-btn:disabled { opacity:.4; cursor:not-allowed; }
+
   /* ── GRID ── */
   .browser-wrap { position:relative; z-index:10; max-width:900px; margin:0 auto 50px; padding:0 16px; }
   .browser-title { font-family:'Orbitron',sans-serif; font-size:.58rem; letter-spacing:.2em; color:var(--dim); text-transform:uppercase; text-align:center; margin-bottom:12px; }
@@ -279,40 +308,865 @@
 <div class="picker">
   <div class="pick-group">
     <label>Object A</label>
-    <select id="selA"></select>
+    <select id="selA"><optgroup label="Asteroids"><option value="ryugu">Ryugu</option><option value="bennu">Bennu</option><option value="itokawa">Itokawa</option><option value="mathilde">Mathilde</option><option value="lutetia">Lutetia</option><option value="ida">Ida</option><option value="vesta">Vesta</option><option value="pallas">Pallas</option><option value="hygiea">Hygiea</option></optgroup><optgroup label="Comets"><option value="churyumov">67P / C-G</option><option value="halley">Halley's Comet</option><option value="hale_bopp">Hale-Bopp</option></optgroup><optgroup label="Dwarfs"><option value="ceres">Ceres</option><option value="pluto">Pluto</option><option value="eris">Eris</option><option value="makemake">Makemake</option><option value="haumea">Haumea</option><option value="quaoar">Quaoar</option><option value="sedna">Sedna</option><option value="gonggong">Gonggong</option><option value="orcus">Orcus</option></optgroup><optgroup label="Moons"><option value="phobos">Phobos</option><option value="deimos">Deimos</option><option value="moon">Earth's Moon</option><option value="io">Io</option><option value="europa">Europa</option><option value="ganymede">Ganymede</option><option value="callisto">Callisto</option><option value="titan">Titan</option><option value="rhea">Rhea</option><option value="dione">Dione</option><option value="tethys">Tethys</option><option value="enceladus">Enceladus</option><option value="mimas">Mimas</option><option value="triton">Triton</option><option value="charon">Charon</option><option value="miranda">Miranda</option><option value="ariel">Ariel</option><option value="umbriel">Umbriel</option><option value="titania">Titania</option><option value="oberon">Oberon</option></optgroup><optgroup label="Planets"><option value="mercury">Mercury</option><option value="mars">Mars</option><option value="venus">Venus</option><option value="earth">Earth</option><option value="neptune">Neptune</option><option value="uranus">Uranus</option><option value="saturn">Saturn</option><option value="jupiter">Jupiter</option></optgroup><optgroup label="Stars"><option value="sun">The Sun</option><option value="proxima">Proxima Cen.</option><option value="sirius">Sirius A</option><option value="pollux">Pollux</option><option value="aldebaran">Aldebaran</option><option value="rigel">Rigel</option><option value="betelgeuse">Betelgeuse</option><option value="uy_scuti">UY Scuti</option></optgroup><optgroup label="Exoplanets"><option value="proxima_b">Proxima b</option><option value="kepler22b">Kepler-22b</option><option value="trappist1e">TRAPPIST-1e</option><option value="hd209458b">HD 209458 b</option><option value="hot_jupiter">51 Peg b</option><option value="wasp12b">WASP-12b</option><option value="kepler7b">Kepler-7b</option><option value="gj1214b">GJ 1214 b</option><option value="k2_18b">K2-18 b</option><option value="hat_p7b">HAT-P-7b</option></optgroup><optgroup label="Blackholes"><option value="cygnus">Cygnus X-1</option><option value="v404">V404 Cygni</option><option value="sgr_a">Sgr A*</option><option value="m87">M87*</option><option value="ton618">TON 618</option></optgroup></select>
   </div>
   <button class="compare-btn" onclick="runCompare()">Compare ▶</button>
   <div class="pick-group">
     <label>Object B</label>
-    <select id="selB"></select>
+    <select id="selB"><optgroup label="Asteroids"><option value="ryugu">Ryugu</option><option value="bennu">Bennu</option><option value="itokawa">Itokawa</option><option value="mathilde">Mathilde</option><option value="lutetia">Lutetia</option><option value="ida">Ida</option><option value="vesta">Vesta</option><option value="pallas">Pallas</option><option value="hygiea">Hygiea</option></optgroup><optgroup label="Comets"><option value="churyumov">67P / C-G</option><option value="halley">Halley's Comet</option><option value="hale_bopp">Hale-Bopp</option></optgroup><optgroup label="Dwarfs"><option value="ceres">Ceres</option><option value="pluto">Pluto</option><option value="eris">Eris</option><option value="makemake">Makemake</option><option value="haumea">Haumea</option><option value="quaoar">Quaoar</option><option value="sedna">Sedna</option><option value="gonggong">Gonggong</option><option value="orcus">Orcus</option></optgroup><optgroup label="Moons"><option value="phobos">Phobos</option><option value="deimos">Deimos</option><option value="moon">Earth's Moon</option><option value="io">Io</option><option value="europa">Europa</option><option value="ganymede">Ganymede</option><option value="callisto">Callisto</option><option value="titan">Titan</option><option value="rhea">Rhea</option><option value="dione">Dione</option><option value="tethys">Tethys</option><option value="enceladus">Enceladus</option><option value="mimas">Mimas</option><option value="triton">Triton</option><option value="charon">Charon</option><option value="miranda">Miranda</option><option value="ariel">Ariel</option><option value="umbriel">Umbriel</option><option value="titania">Titania</option><option value="oberon">Oberon</option></optgroup><optgroup label="Planets"><option value="mercury">Mercury</option><option value="mars">Mars</option><option value="venus">Venus</option><option value="earth">Earth</option><option value="neptune">Neptune</option><option value="uranus">Uranus</option><option value="saturn">Saturn</option><option value="jupiter">Jupiter</option></optgroup><optgroup label="Stars"><option value="sun">The Sun</option><option value="proxima">Proxima Cen.</option><option value="sirius">Sirius A</option><option value="pollux">Pollux</option><option value="aldebaran">Aldebaran</option><option value="rigel">Rigel</option><option value="betelgeuse">Betelgeuse</option><option value="uy_scuti">UY Scuti</option></optgroup><optgroup label="Exoplanets"><option value="proxima_b">Proxima b</option><option value="kepler22b">Kepler-22b</option><option value="trappist1e">TRAPPIST-1e</option><option value="hd209458b">HD 209458 b</option><option value="hot_jupiter">51 Peg b</option><option value="wasp12b">WASP-12b</option><option value="kepler7b">Kepler-7b</option><option value="gj1214b">GJ 1214 b</option><option value="k2_18b">K2-18 b</option><option value="hat_p7b">HAT-P-7b</option></optgroup><optgroup label="Blackholes"><option value="cygnus">Cygnus X-1</option><option value="v404">V404 Cygni</option><option value="sgr_a">Sgr A*</option><option value="m87">M87*</option><option value="ton618">TON 618</option></optgroup></select>
   </div>
 </div>
 
 <div class="scale-wrap">
-  <p class="scale-label" id="scaleLabel">Select two objects and click Compare</p>
+  <p class="scale-label" id="scaleLabel">⚠ <strong style="color:var(--accent2)">Earth</strong> would be invisible at true scale (shown as 4px). That's how extreme this size difference really is!</p>
   <div class="canvas-scroll">
-    <div class="canvas-inner" id="canvasInner"></div>
+    <div class="canvas-inner" id="canvasInner" style="min-height: 1230px;"><div class="obj-col" style="min-width: 100px;">
+      <div class="obj-sphere-wrap" style="width:37px;height:37px;">
+    <div class="obj-sphere" style="width:4px;height:4px;background:radial-gradient(circle at 35% 35%,#3b82f6cc,#3b82f6 60%,#3b82f644 100%);box-shadow:0 0 14px 3px #3b82f633;"></div>
+    <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+  </div>
+      <div class="obj-col-label">
+        <div class="obj-col-name">Earth</div>
+        <div class="obj-col-type" style="color:#60a5fa">planet</div>
+        <div class="speak-btn" onclick="speak(&#39;ERTH&#39;,event)" title="Hear name">🔊</div>
+      </div></div><div class="obj-col" style="min-width: 1124px;">
+      <div class="obj-sphere-wrap" style="width:1100px;height:1100px;">
+    <div class="obj-sphere" style="width:1100px;height:1100px;background:radial-gradient(circle at 35% 35%,#fffde7,#ef4444 55%,#ef444488 100%);animation:star-pulse 2.5s ease-in-out infinite;"></div>
+    
+  </div>
+      <div class="obj-col-label">
+        <div class="obj-col-name">Betelgeuse</div>
+        <div class="obj-col-type" style="color:#fbbf24">star</div>
+        <div class="speak-btn" onclick="speak(&#39;BEE-tel-jooz&#39;,event)" title="Hear name">🔊</div>
+      </div></div></div>
   </div>
 </div>
 
-<div class="cmp-panel" id="cmpPanel">
+<div class="cmp-panel visible" id="cmpPanel">
   <div class="cmp-header">⬡ Scale Comparison</div>
-  <div class="cmp-objects" id="cmpObjects"></div>
-  <div class="cmp-ratio" id="cmpRatio"></div>
-  <div class="cmp-desc" id="cmpDesc"></div>
-  <div class="scale-note" id="scaleNote"></div>
+  <div class="cmp-objects" id="cmpObjects">
+    <div class="cmp-obj">
+      <div class="obj-sphere-wrap" style="width:45px;height:45px;">
+    <div class="obj-sphere" style="width:12px;height:12px;background:radial-gradient(circle at 35% 35%,#3b82f6cc,#3b82f6 60%,#3b82f644 100%);box-shadow:0 0 14px 3px #3b82f633;"></div>
+    <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+  </div>
+      <div class="cmp-name">Earth</div>
+      <div class="cmp-stat">6,371 km radius</div>
+      <div class="speak-btn" style="margin-top:5px" onclick="speak(&#39;ERTH&#39;,event)">🔊</div>
+    </div>
+    <div class="cmp-vs">VS</div>
+    <div class="cmp-obj">
+      <div class="obj-sphere-wrap" style="width:120px;height:120px;">
+    <div class="obj-sphere" style="width:120px;height:120px;background:radial-gradient(circle at 35% 35%,#fffde7,#ef4444 55%,#ef444488 100%);animation:star-pulse 2.5s ease-in-out infinite;"></div>
+    
+  </div>
+      <div class="cmp-name">Betelgeuse</div>
+      <div class="cmp-stat">617.00 million km radius</div>
+      <div class="speak-btn" style="margin-top:5px" onclick="speak(&#39;BEE-tel-jooz&#39;,event)">🔊</div>
+    </div></div>
+  <div class="cmp-ratio" id="cmpRatio">Betelgeuse is 97,000× larger than Earth</div>
+  <div class="cmp-desc" id="cmpDesc"><strong>Earth:</strong> Our home — the only confirmed life-bearing world in the universe, with liquid water on its surface.<br><br><strong>Betelgeuse:</strong> A red supergiant in Orion so vast it would extend to Jupiter's orbit if placed at the center of our solar system.<br><br><span style="color:var(--accent)">🤯 Mind-bender:</span> About <strong style="color:var(--gold)">908 trillion</strong> copies of Earth could fit inside Betelgeuse by volume!</div>
+  <div class="scale-note" id="scaleNote">⚠ True-scale view above: the smaller object may appear as a tiny dot — that's how extreme this really is!</div>
   <div class="share-row">
     <span class="share-label">Share this comparison</span>
     <button class="share-btn" id="shareBtn" onclick="copyShareLink()">🔗 Copy Link</button>
+  </div>
+<div id="relatableBox" class="relatable-box"><div class="relatable-header">📐 Put it in perspective</div><span class="relatable-item">📏 <strong>Betelgeuse</strong>'s diameter spans roughly <strong>17628.6 billion × a human hair width</strong>.</span><span class="relatable-item">📏 <strong>Betelgeuse</strong>'s diameter spans roughly <strong>2468.0 billion × a grain of sand</strong>.</span><span class="relatable-item">📏 <strong>Betelgeuse</strong>'s diameter spans roughly <strong>12.3 billion × a football field length</strong>.</span><span class="relatable-item">📏 <strong>Betelgeuse</strong>'s diameter spans roughly <strong>139.5 million × Mt. Everest height</strong>.</span></div></div>
+
+<div class="funfact-wrap" id="funfactWrap">
+  <div class="funfact-box">
+    <div class="funfact-header">✦ AI Fun Fact</div>
+    <div class="funfact-text" id="funfactText"></div>
+    <button class="funfact-btn" id="funfactBtn" onclick="generateFunFact()">✦ Generate Fun Fact</button>
   </div>
 </div>
 
 <div class="browser-wrap">
   <div class="browser-title">Browse All Objects</div>
-  <div class="cat-tabs" id="catTabs"></div>
+  <div class="cat-tabs" id="catTabs"><div class="cat-tab active">🌌 All</div><div class="cat-tab">🪨 Asteroids</div><div class="cat-tab">☄️ Comets</div><div class="cat-tab">🔵 Dwarf Planets</div><div class="cat-tab">🌙 Moons</div><div class="cat-tab">🪐 Planets</div><div class="cat-tab">⭐ Stars</div><div class="cat-tab">🌍 Exoplanets</div><div class="cat-tab">🕳 Black Holes</div></div>
   <input class="search-bar" id="searchBar" placeholder="🔍  Search objects…" oninput="renderGrid()">
-  <div class="count-badge" id="countBadge"></div>
-  <div class="grid" id="objectGrid"></div>
+  <div class="count-badge" id="countBadge">72 objects shown</div>
+  <div class="grid" id="objectGrid"><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:51.62899042004121px;height:51.62899042004121px;">
+        <div class="grid-bubble" style="width:11.62899042004121px;height:11.62899042004121px;background:radial-gradient(circle at 35% 35%,#5a5a5acc,#5a5a5a 60%,#5a5a5a44 100%);box-shadow:0 0 14px 3px #5a5a5a33;"></div>
+        
+      </div>
+      <div class="grid-name">Ryugu</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;ree-YOO-goo&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:50.64184123129459px;height:50.64184123129459px;">
+        <div class="grid-bubble" style="width:10.641841231294588px;height:10.641841231294588px;background:radial-gradient(circle at 35% 35%,#6a6060cc,#6a6060 60%,#6a606044 100%);box-shadow:0 0 14px 3px #6a606033;"></div>
+        
+      </div>
+      <div class="grid-name">Bennu</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;BEN-oo&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:50px;height:50px;">
+        <div class="grid-bubble" style="width:10px;height:10px;background:radial-gradient(circle at 35% 35%,#7a7060cc,#7a7060 60%,#7a706044 100%);box-shadow:0 0 14px 3px #7a706033;"></div>
+        
+      </div>
+      <div class="grid-name">Itokawa</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;ee-toh-KAH-wah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:58.24633798060741px;height:58.24633798060741px;">
+        <div class="grid-bubble" style="width:18.24633798060741px;height:18.24633798060741px;background:radial-gradient(circle at 35% 35%,#4a4a4acc,#4a4a4a 60%,#4a4a4a44 100%);box-shadow:0 0 14px 3px #4a4a4a33;"></div>
+        
+      </div>
+      <div class="grid-name">Mathilde</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;mah-TILD&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:59.24434306617961px;height:59.24434306617961px;">
+        <div class="grid-bubble" style="width:19.24434306617961px;height:19.24434306617961px;background:radial-gradient(circle at 35% 35%,#5a5060cc,#5a5060 60%,#5a506044 100%);box-shadow:0 0 14px 3px #5a506033;"></div>
+        
+      </div>
+      <div class="grid-name">Lutetia</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;loo-TEE-shah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:57.39639413305631px;height:57.39639413305631px;">
+        <div class="grid-bubble" style="width:17.39639413305631px;height:17.39639413305631px;background:radial-gradient(circle at 35% 35%,#6a6060cc,#6a6060 60%,#6a606044 100%);box-shadow:0 0 14px 3px #6a606033;"></div>
+        
+      </div>
+      <div class="grid-name">Ida</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;EYE-dah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:61.970728575118706px;height:61.970728575118706px;">
+        <div class="grid-bubble" style="width:21.970728575118706px;height:21.970728575118706px;background:radial-gradient(circle at 35% 35%,#9a9080cc,#9a9080 60%,#9a908044 100%);box-shadow:0 0 14px 3px #9a908033;"></div>
+        
+      </div>
+      <div class="grid-name">Vesta</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;VES-tah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:61.92878170988163px;height:61.92878170988163px;">
+        <div class="grid-bubble" style="width:21.92878170988163px;height:21.92878170988163px;background:radial-gradient(circle at 35% 35%,#8a8878cc,#8a8878 60%,#8a887844 100%);box-shadow:0 0 14px 3px #8a887833;"></div>
+        
+      </div>
+      <div class="grid-name">Pallas</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;PAL-us&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:61.66042815776137px;height:61.66042815776137px;">
+        <div class="grid-bubble" style="width:21.660428157761373px;height:21.660428157761373px;background:radial-gradient(circle at 35% 35%,#7a7870cc,#7a7870 60%,#7a787044 100%);box-shadow:0 0 14px 3px #7a787033;"></div>
+        
+      </div>
+      <div class="grid-name">Hygiea</div>
+      <div class="grid-type" style="color:#a0a090">asteroid</div>
+      <div class="grid-speak" onclick="speak(&#39;hi-JEE-ah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:54.05088456619271px;height:54.05088456619271px;">
+        <div class="grid-bubble" style="width:14.050884566192707px;height:14.050884566192707px;background:radial-gradient(circle at 40% 40%,#e8e8d8,#4a4a40 65%,#4a4a4066 100%);box-shadow:0 0 10px 2px rgba(200,200,160,.3);"></div>
+        
+      </div>
+      <div class="grid-name">67P / C-G</div>
+      <div class="grid-type" style="color:#b0b090">comet</div>
+      <div class="grid-speak" onclick="speak(&#39;67P Churyumov Gerasimenko&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:55.693349163317286px;height:55.693349163317286px;">
+        <div class="grid-bubble" style="width:15.693349163317286px;height:15.693349163317286px;background:radial-gradient(circle at 40% 40%,#e8e8d8,#555548 65%,#55554866 100%);box-shadow:0 0 10px 2px rgba(200,200,160,.3);"></div>
+        
+      </div>
+      <div class="grid-name">Halley's Comet</div>
+      <div class="grid-type" style="color:#b0b090">comet</div>
+      <div class="grid-speak" onclick="speak(&#39;HAL-eez comet&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:58.44775346102834px;height:58.44775346102834px;">
+        <div class="grid-bubble" style="width:18.44775346102834px;height:18.44775346102834px;background:radial-gradient(circle at 40% 40%,#e8e8d8,#606055 65%,#60605566 100%);box-shadow:0 0 10px 2px rgba(200,200,160,.3);"></div>
+        
+      </div>
+      <div class="grid-name">Hale-Bopp</div>
+      <div class="grid-type" style="color:#b0b090">comet</div>
+      <div class="grid-speak" onclick="speak(&#39;HAYL BOP&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:62.914189355715905px;height:62.914189355715905px;">
+        <div class="grid-bubble" style="width:22.914189355715905px;height:22.914189355715905px;background:radial-gradient(circle at 35% 35%,#888880cc,#888880 60%,#88888044 100%);box-shadow:0 0 14px 3px #88888033;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Ceres</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;SEER-eez&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:64.42080717802051px;height:64.42080717802051px;">
+        <div class="grid-bubble" style="width:24.420807178020503px;height:24.420807178020503px;background:radial-gradient(circle at 35% 35%,#c8a88acc,#c8a88a 60%,#c8a88a44 100%);box-shadow:0 0 14px 3px #c8a88a33;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Pluto</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;PLOO-toh&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:64.38627527196248px;height:64.38627527196248px;">
+        <div class="grid-bubble" style="width:24.386275271962475px;height:24.386275271962475px;background:radial-gradient(circle at 35% 35%,#c0c0c8cc,#c0c0c8 60%,#c0c0c844 100%);box-shadow:0 0 14px 3px #c0c0c833;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Eris</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;EE-ris&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.59641935420156px;height:63.59641935420156px;">
+        <div class="grid-bubble" style="width:23.596419354201558px;height:23.596419354201558px;background:radial-gradient(circle at 35% 35%,#c89070cc,#c89070 60%,#c8907044 100%);box-shadow:0 0 14px 3px #c8907033;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Makemake</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;MAH-keh MAH-keh&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.36494982521043px;height:63.36494982521043px;">
+        <div class="grid-bubble" style="width:23.364949825210434px;height:23.364949825210434px;background:radial-gradient(circle at 35% 35%,#d8d0c0cc,#d8d0c0 60%,#d8d0c044 100%);box-shadow:0 0 14px 3px #d8d0c033;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Haumea</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;how-MAY-ah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.1851306961112px;height:63.1851306961112px;">
+        <div class="grid-bubble" style="width:23.1851306961112px;height:23.1851306961112px;background:radial-gradient(circle at 35% 35%,#a09080cc,#a09080 60%,#a0908044 100%);box-shadow:0 0 14px 3px #a0908033;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Quaoar</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;KWAH-oh-ar&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.00591762980197px;height:63.00591762980197px;">
+        <div class="grid-bubble" style="width:23.005917629801967px;height:23.005917629801967px;background:radial-gradient(circle at 35% 35%,#c86050cc,#c86050 60%,#c8605044 100%);box-shadow:0 0 14px 3px #c8605033;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Sedna</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;SED-nah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.35180295969359px;height:63.35180295969359px;">
+        <div class="grid-bubble" style="width:23.351802959693593px;height:23.351802959693593px;background:radial-gradient(circle at 35% 35%,#b06868cc,#b06868 60%,#b0686844 100%);box-shadow:0 0 14px 3px #b0686833;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Gonggong</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;GONG-gong&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:62.873233299199036px;height:62.873233299199036px;">
+        <div class="grid-bubble" style="width:22.873233299199036px;height:22.873233299199036px;background:radial-gradient(circle at 35% 35%,#909090cc,#909090 60%,#90909044 100%);box-shadow:0 0 14px 3px #90909033;"></div>
+        <div class="orbit-ring" style="
+      width:45px;height:45px;
+      border:1px solid rgba(96,176,192,.45);
+      animation:orbit-spin 11s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Orcus</div>
+      <div class="grid-type" style="color:#60b0c0">dwarf</div>
+      <div class="grid-speak" onclick="speak(&#39;OR-kus&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:56.848018409423034px;height:56.848018409423034px;">
+        <div class="grid-bubble" style="width:16.84801840942303px;height:16.84801840942303px;background:radial-gradient(circle at 35% 35%,#7a8a9acc,#7a8a9a 60%,#7a8a9a44 100%);box-shadow:0 0 14px 3px #7a8a9a33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Phobos</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;FOH-boss&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:55.887861867995255px;height:55.887861867995255px;">
+        <div class="grid-bubble" style="width:15.887861867995255px;height:15.887861867995255px;background:radial-gradient(circle at 35% 35%,#8a9aaacc,#8a9aaa 60%,#8a9aaa44 100%);box-shadow:0 0 14px 3px #8a9aaa33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Deimos</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;DAY-moss&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:65.03760479167222px;height:65.03760479167222px;">
+        <div class="grid-bubble" style="width:25.037604791672226px;height:25.037604791672226px;background:radial-gradient(circle at 35% 35%,#94a3b8cc,#94a3b8 60%,#94a3b844 100%);box-shadow:0 0 14px 3px #94a3b833;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Earth's Moon</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;Earths Moon&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:65.11428280476889px;height:65.11428280476889px;">
+        <div class="grid-bubble" style="width:25.114282804768898px;height:25.114282804768898px;background:radial-gradient(circle at 35% 35%,#e8c840cc,#e8c840 60%,#e8c84044 100%);box-shadow:0 0 14px 3px #e8c84033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Io</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;EYE-oh&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:64.86310742864471px;height:64.86310742864471px;">
+        <div class="grid-bubble" style="width:24.863107428644714px;height:24.863107428644714px;background:radial-gradient(circle at 35% 35%,#b0c4decc,#b0c4de 60%,#b0c4de44 100%);box-shadow:0 0 14px 3px #b0c4de33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Europa</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;yoo-ROH-pah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:65.71359318092598px;height:65.71359318092598px;">
+        <div class="grid-bubble" style="width:25.713593180925976px;height:25.713593180925976px;background:radial-gradient(circle at 35% 35%,#8899aacc,#8899aa 60%,#8899aa44 100%);box-shadow:0 0 14px 3px #8899aa33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Ganymede</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;GAN-ih-meed&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:65.5692901385894px;height:65.5692901385894px;">
+        <div class="grid-bubble" style="width:25.569290138589388px;height:25.569290138589388px;background:radial-gradient(circle at 35% 35%,#7a8090cc,#7a8090 60%,#7a809044 100%);box-shadow:0 0 14px 3px #7a809033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Callisto</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;kah-LIS-toh&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:65.67744178987654px;height:65.67744178987654px;">
+        <div class="grid-bubble" style="width:25.67744178987654px;height:25.67744178987654px;background:radial-gradient(circle at 35% 35%,#c8a86bcc,#c8a86b 60%,#c8a86b44 100%);box-shadow:0 0 14px 3px #c8a86b33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Titan</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;TY-tan&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.70404200398954px;height:63.70404200398954px;">
+        <div class="grid-bubble" style="width:23.70404200398954px;height:23.70404200398954px;background:radial-gradient(circle at 35% 35%,#c0bab0cc,#c0bab0 60%,#c0bab044 100%);box-shadow:0 0 14px 3px #c0bab033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Rhea</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;REE-ah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.202589240887974px;height:63.202589240887974px;">
+        <div class="grid-bubble" style="width:23.202589240887974px;height:23.202589240887974px;background:radial-gradient(circle at 35% 35%,#b8b4accc,#b8b4ac 60%,#b8b4ac44 100%);box-shadow:0 0 14px 3px #b8b4ac33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Dione</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;die-OH-nee&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.11335640144852px;height:63.11335640144852px;">
+        <div class="grid-bubble" style="width:23.11335640144852px;height:23.11335640144852px;background:radial-gradient(circle at 35% 35%,#d0cfc8cc,#d0cfc8 60%,#d0cfc844 100%);box-shadow:0 0 14px 3px #d0cfc833;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Tethys</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;TEE-this&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:61.903212220486715px;height:61.903212220486715px;">
+        <div class="grid-bubble" style="width:21.903212220486715px;height:21.903212220486715px;background:radial-gradient(circle at 35% 35%,#eef4ffcc,#eef4ff 60%,#eef4ff44 100%);box-shadow:0 0 14px 3px #eef4ff33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Enceladus</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;en-SEL-ah-dus&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:61.511654506452764px;height:61.511654506452764px;">
+        <div class="grid-bubble" style="width:21.511654506452764px;height:21.511654506452764px;background:radial-gradient(circle at 35% 35%,#c8c4bccc,#c8c4bc 60%,#c8c4bc44 100%);box-shadow:0 0 14px 3px #c8c4bc33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Mimas</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;MY-mus&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:64.63196521122012px;height:64.63196521122012px;">
+        <div class="grid-bubble" style="width:24.63196521122012px;height:24.63196521122012px;background:radial-gradient(circle at 35% 35%,#7799bbcc,#7799bb 60%,#7799bb44 100%);box-shadow:0 0 14px 3px #7799bb33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Triton</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;TRY-ton&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.32786696324019px;height:63.32786696324019px;">
+        <div class="grid-bubble" style="width:23.32786696324019px;height:23.32786696324019px;background:radial-gradient(circle at 35% 35%,#9090a0cc,#9090a0 60%,#9090a044 100%);box-shadow:0 0 14px 3px #9090a033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Charon</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;KAIR-on&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:61.78981216788883px;height:61.78981216788883px;">
+        <div class="grid-bubble" style="width:21.789812167888833px;height:21.789812167888833px;background:radial-gradient(circle at 35% 35%,#a0a8b0cc,#a0a8b0 60%,#a0a8b044 100%);box-shadow:0 0 14px 3px #a0a8b033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Miranda</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;mih-RAN-dah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.253865997774334px;height:63.253865997774334px;">
+        <div class="grid-bubble" style="width:23.253865997774334px;height:23.253865997774334px;background:radial-gradient(circle at 35% 35%,#b0b8c0cc,#b0b8c0 60%,#b0b8c044 100%);box-shadow:0 0 14px 3px #b0b8c033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Ariel</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;AIR-ee-el&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.2678267804376px;height:63.2678267804376px;">
+        <div class="grid-bubble" style="width:23.267826780437602px;height:23.267826780437602px;background:radial-gradient(circle at 35% 35%,#606870cc,#606870 60%,#60687044 100%);box-shadow:0 0 14px 3px #60687033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Umbriel</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;UM-bree-el&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.75426133779746px;height:63.75426133779746px;">
+        <div class="grid-bubble" style="width:23.75426133779746px;height:23.75426133779746px;background:radial-gradient(circle at 35% 35%,#a0a8b0cc,#a0a8b0 60%,#a0a8b044 100%);box-shadow:0 0 14px 3px #a0a8b033;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Titania</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;tih-TAY-nee-ah&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:63.69765394714479px;height:63.69765394714479px;">
+        <div class="grid-bubble" style="width:23.697653947144786px;height:23.697653947144786px;background:radial-gradient(circle at 35% 35%,#909098cc,#909098 60%,#90909844 100%);box-shadow:0 0 14px 3px #90909833;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1px solid rgba(148,163,184,.5);
+      animation:orbit-spin 9s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Oberon</div>
+      <div class="grid-type" style="color:#94a3b8">moon</div>
+      <div class="grid-speak" onclick="speak(&#39;OH-beh-ron&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:65.58871096885433px;height:65.58871096885433px;">
+        <div class="grid-bubble" style="width:25.58871096885433px;height:25.58871096885433px;background:radial-gradient(circle at 35% 35%,#b0a090cc,#b0a090 60%,#b0a09044 100%);box-shadow:0 0 14px 3px #b0a09033;"></div>
+        <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Mercury</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;MER-kyoo-ree&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:66.12327751352232px;height:66.12327751352232px;">
+        <div class="grid-bubble" style="width:26.12327751352233px;height:26.12327751352233px;background:radial-gradient(circle at 35% 35%,#c1440ecc,#c1440e 60%,#c1440e44 100%);box-shadow:0 0 14px 3px #c1440e33;"></div>
+        <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Mars</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;MARZ&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:67.06426612116566px;height:67.06426612116566px;">
+        <div class="grid-bubble" style="width:27.064266121165655px;height:27.064266121165655px;background:radial-gradient(circle at 35% 35%,#e8c97acc,#e8c97a 60%,#e8c97a44 100%);box-shadow:0 0 14px 3px #e8c97a33;"></div>
+        <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Venus</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;VEE-nus&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:67.14766812387552px;height:67.14766812387552px;">
+        <div class="grid-bubble" style="width:27.147668123875526px;height:27.147668123875526px;background:radial-gradient(circle at 35% 35%,#3b82f6cc,#3b82f6 60%,#3b82f644 100%);box-shadow:0 0 14px 3px #3b82f633;"></div>
+        <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Earth</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;ERTH&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:69.3426260707009px;height:69.3426260707009px;">
+        <div class="grid-bubble" style="width:29.342626070700902px;height:29.342626070700902px;background:radial-gradient(circle at 35% 35%,#2563ebcc,#2563eb 60%,#2563eb44 100%);box-shadow:0 0 14px 3px #2563eb33;"></div>
+        <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Neptune</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;NEP-toon&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:69.39070438644873px;height:69.39070438644873px;">
+        <div class="grid-bubble" style="width:29.390704386448725px;height:29.390704386448725px;background:radial-gradient(circle at 35% 35%,#7ec8c8cc,#7ec8c8 60%,#7ec8c844 100%);box-shadow:0 0 14px 3px #7ec8c833;"></div>
+        <div class="orbit-ring" style="
+      width:46.5px;height:46.5px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:55.5px;height:55.5px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Uranus</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;YOOR-uh-nus&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:70.74023729297113px;height:70.74023729297113px;">
+        <div class="grid-bubble" style="width:30.740237292971138px;height:30.740237292971138px;background:radial-gradient(circle at 35% 35%,#d4a96acc,#d4a96a 60%,#d4a96a44 100%);box-shadow:0 0 14px 3px #d4a96a33;"></div>
+        <div class="orbit-ring" style="
+      width:47.647367804105265px;height:47.647367804105265px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:56.86943899199661px;height:56.86943899199661px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Saturn</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;SAT-urn&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:71.03701715001942px;height:71.03701715001942px;">
+        <div class="grid-bubble" style="width:31.03701715001942px;height:31.03701715001942px;background:radial-gradient(circle at 35% 35%,#c97a50cc,#c97a50 60%,#c97a5044 100%);box-shadow:0 0 14px 3px #c97a5033;"></div>
+        <div class="orbit-ring" style="
+      width:48.1073765825301px;height:48.1073765825301px;
+      border:1.5px solid rgba(74,240,255,.55);
+      animation:orbit-spin 7s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:57.41848172753593px;height:57.41848172753593px;
+      border:1px solid rgba(192,132,252,.35);
+      animation:orbit-spin-rev 13s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Jupiter</div>
+      <div class="grid-type" style="color:#60a5fa">planet</div>
+      <div class="grid-speak" onclick="speak(&#39;JOO-pih-ter&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:74.768322280626px;height:74.768322280626px;">
+        <div class="grid-bubble" style="width:34.768322280625995px;height:34.768322280625995px;background:radial-gradient(circle at 35% 35%,#fffde7,#fbbf24 55%,#fbbf2488 100%);"></div>
+        
+      </div>
+      <div class="grid-name">The Sun</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;The Sun&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:71.72804312669459px;height:71.72804312669459px;">
+        <div class="grid-bubble" style="width:31.728043126694594px;height:31.728043126694594px;background:radial-gradient(circle at 35% 35%,#fffde7,#ff9999 55%,#ff999988 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Proxima Cen.</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;PROX-ih-mah Sen-TAW-ree&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:75.63917019778455px;height:75.63917019778455px;">
+        <div class="grid-bubble" style="width:35.63917019778455px;height:35.63917019778455px;background:radial-gradient(circle at 35% 35%,#fffde7,#dbeafe 55%,#dbeafe88 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Sirius A</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;SEER-ee-us A&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:78.12461303496282px;height:78.12461303496282px;">
+        <div class="grid-bubble" style="width:38.12461303496282px;height:38.12461303496282px;background:radial-gradient(circle at 35% 35%,#fffde7,#fcd34d 55%,#fcd34d88 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Pollux</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;POL-ux&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:80.93225584057853px;height:80.93225584057853px;">
+        <div class="grid-bubble" style="width:40.932255840578534px;height:40.932255840578534px;background:radial-gradient(circle at 35% 35%,#fffde7,#f97316 55%,#f9731688 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Aldebaran</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;al-DEB-uh-ran&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:81.74056076006924px;height:81.74056076006924px;">
+        <div class="grid-bubble" style="width:41.74056076006924px;height:41.74056076006924px;background:radial-gradient(circle at 35% 35%,#fffde7,#eff6ff 55%,#eff6ff88 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Rigel</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;RY-jel&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:85.78833835876296px;height:85.78833835876296px;">
+        <div class="grid-bubble" style="width:45.788338358762964px;height:45.788338358762964px;background:radial-gradient(circle at 35% 35%,#fffde7,#ef4444 55%,#ef444488 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Betelgeuse</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;BEE-tel-jooz&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:86.85207104966604px;height:86.85207104966604px;">
+        <div class="grid-bubble" style="width:46.85207104966604px;height:46.85207104966604px;background:radial-gradient(circle at 35% 35%,#fffde7,#dc2626 55%,#dc262688 100%);"></div>
+        
+      </div>
+      <div class="grid-name">UY Scuti</div>
+      <div class="grid-type" style="color:#fbbf24">star</div>
+      <div class="grid-speak" onclick="speak(&#39;U Y SCOO-tee&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:67.34627786654336px;height:67.34627786654336px;">
+        <div class="grid-bubble" style="width:27.346277866543364px;height:27.346277866543364px;background:radial-gradient(circle at 35% 35%,#5588aacc,#5588aa 60%,#5588aa44 100%);box-shadow:0 0 14px 3px #5588aa33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:60px;height:60px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Proxima b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;PROX-ih-mah B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:68.56906209715162px;height:68.56906209715162px;">
+        <div class="grid-bubble" style="width:28.56906209715162px;height:28.56906209715162px;background:radial-gradient(circle at 35% 35%,#4477cccc,#4477cc 60%,#4477cc44 100%);box-shadow:0 0 14px 3px #4477cc33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:60px;height:60px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Kepler-22b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;KEP-ler 22 B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:67.0063707590452px;height:67.0063707590452px;">
+        <div class="grid-bubble" style="width:27.006370759045193px;height:27.006370759045193px;background:radial-gradient(circle at 35% 35%,#336699cc,#336699 60%,#33669944 100%);box-shadow:0 0 14px 3px #33669933;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:60px;height:60px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">TRAPPIST-1e</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;TRAP-ist one E&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:71.5177278804437px;height:71.5177278804437px;">
+        <div class="grid-bubble" style="width:31.517727880443704px;height:31.517727880443704px;background:radial-gradient(circle at 35% 35%,#887744cc,#887744 60%,#88774444 100%);box-shadow:0 0 14px 3px #88774433;"></div>
+        <div class="orbit-ring" style="
+      width:50.42836460870993px;height:50.42836460870993px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:63.03545576088741px;height:63.03545576088741px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">HD 209458 b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;H D two oh nine four five eight B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:71.12930761476818px;height:71.12930761476818px;">
+        <div class="grid-bubble" style="width:31.12930761476818px;height:31.12930761476818px;background:radial-gradient(circle at 35% 35%,#cc8833cc,#cc8833 60%,#cc883344 100%);box-shadow:0 0 14px 3px #cc883333;"></div>
+        <div class="orbit-ring" style="
+      width:49.80689218362909px;height:49.80689218362909px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:62.25861522953636px;height:62.25861522953636px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">51 Peg b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;51 Pegasi B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:71.84511212712928px;height:71.84511212712928px;">
+        <div class="grid-bubble" style="width:31.84511212712929px;height:31.84511212712929px;background:radial-gradient(circle at 35% 35%,#884422cc,#884422 60%,#88442244 100%);box-shadow:0 0 14px 3px #88442233;"></div>
+        <div class="orbit-ring" style="
+      width:50.952179403406866px;height:50.952179403406866px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:63.69022425425858px;height:63.69022425425858px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">WASP-12b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;WASP 12 B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:71.55191080659276px;height:71.55191080659276px;">
+        <div class="grid-bubble" style="width:31.55191080659275px;height:31.55191080659275px;background:radial-gradient(circle at 35% 35%,#aabb88cc,#aabb88 60%,#aabb8844 100%);box-shadow:0 0 14px 3px #aabb8833;"></div>
+        <div class="orbit-ring" style="
+      width:50.4830572905484px;height:50.4830572905484px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:63.1038216131855px;height:63.1038216131855px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">Kepler-7b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;KEP-ler 7 B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:68.8067055647658px;height:68.8067055647658px;">
+        <div class="grid-bubble" style="width:28.80670556476581px;height:28.80670556476581px;background:radial-gradient(circle at 35% 35%,#4466bbcc,#4466bb 60%,#4466bb44 100%);box-shadow:0 0 14px 3px #4466bb33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:60px;height:60px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">GJ 1214 b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;G J twelve fourteen B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:68.61202606887909px;height:68.61202606887909px;">
+        <div class="grid-bubble" style="width:28.612026068879086px;height:28.612026068879086px;background:radial-gradient(circle at 35% 35%,#3355aacc,#3355aa 60%,#3355aa44 100%);box-shadow:0 0 14px 3px #3355aa33;"></div>
+        <div class="orbit-ring" style="
+      width:48px;height:48px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:60px;height:60px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">K2-18 b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;K 2 eighteen B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:71.69740770800965px;height:71.69740770800965px;">
+        <div class="grid-bubble" style="width:31.697407708009646px;height:31.697407708009646px;background:radial-gradient(circle at 35% 35%,#996633cc,#996633 60%,#99663344 100%);box-shadow:0 0 14px 3px #99663333;"></div>
+        <div class="orbit-ring" style="
+      width:50.71585233281544px;height:50.71585233281544px;
+      border:1.5px solid rgba(52,211,153,.5);
+      animation:orbit-spin 8s linear infinite;
+    "></div><div class="orbit-ring" style="
+      width:63.39481541601929px;height:63.39481541601929px;
+      border:1px solid rgba(52,211,153,.2);
+      animation:orbit-spin-rev 15s linear infinite;
+    "></div>
+      </div>
+      <div class="grid-name">HAT-P-7b</div>
+      <div class="grid-type" style="color:#34d399">exoplanet</div>
+      <div class="grid-speak" onclick="speak(&#39;HAT P 7 B&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:59.06959079632683px;height:59.06959079632683px;">
+        <div class="grid-bubble" style="width:19.06959079632683px;height:19.06959079632683px;background:radial-gradient(circle at 35% 35%,#1a0030 0%,#0a0010 50%,#000 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Cygnus X-1</div>
+      <div class="grid-type" style="color:#c084fc">blackhole</div>
+      <div class="grid-speak" onclick="speak(&#39;SIG-nus X one&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:59.40210094788638px;height:59.40210094788638px;">
+        <div class="grid-bubble" style="width:19.402100947886385px;height:19.402100947886385px;background:radial-gradient(circle at 35% 35%,#1a0030 0%,#0a0010 50%,#000 100%);"></div>
+        
+      </div>
+      <div class="grid-name">V404 Cygni</div>
+      <div class="grid-type" style="color:#c084fc">blackhole</div>
+      <div class="grid-speak" onclick="speak(&#39;V four oh four SIG-nye&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:79.39130110940599px;height:79.39130110940599px;">
+        <div class="grid-bubble" style="width:39.39130110940599px;height:39.39130110940599px;background:radial-gradient(circle at 35% 35%,#1a0030 0%,#0a0010 50%,#000 100%);"></div>
+        
+      </div>
+      <div class="grid-name">Sgr A*</div>
+      <div class="grid-type" style="color:#c084fc">blackhole</div>
+      <div class="grid-speak" onclick="speak(&#39;Sagittarius A star&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:90.31091047459876px;height:90.31091047459876px;">
+        <div class="grid-bubble" style="width:50.310910474598764px;height:50.310910474598764px;background:radial-gradient(circle at 35% 35%,#1a0030 0%,#0a0010 50%,#000 100%);"></div>
+        
+      </div>
+      <div class="grid-name">M87*</div>
+      <div class="grid-type" style="color:#c084fc">blackhole</div>
+      <div class="grid-speak" onclick="speak(&#39;Messier 87 star&#39;,event)">🔊</div></div><div class="grid-card">
+      <div class="grid-bubble-wrap" style="width:94px;height:94px;">
+        <div class="grid-bubble" style="width:54px;height:54px;background:radial-gradient(circle at 35% 35%,#1a0030 0%,#0a0010 50%,#000 100%);"></div>
+        
+      </div>
+      <div class="grid-name">TON 618</div>
+      <div class="grid-type" style="color:#c084fc">blackhole</div>
+      <div class="grid-speak" onclick="speak(&#39;TON six eighteen&#39;,event)">🔊</div></div></div>
   <p class="pick-hint">Tap → <span class="a">Object A</span> &nbsp;|&nbsp; Tap another → <span class="b">Object B</span> &nbsp;|&nbsp; Then Compare</p>
 </div>
 
@@ -623,6 +1477,13 @@ function runCompare() {
   url.searchParams.set('a', idA);
   url.searchParams.set('b', idB);
   window.history.replaceState({}, '', url);
+  // Store for fun fact and reset panel
+  _currentOA = oA; _currentOB = oB;
+  const fw = document.getElementById('funfactWrap');
+  fw.classList.add('visible');
+  document.getElementById('funfactText').textContent = '';
+  document.getElementById('funfactBtn').textContent = '✦ Generate Fun Fact';
+  document.getElementById('funfactBtn').disabled = false;
 
   buildScaleView(oA, oB);
 
@@ -797,6 +1658,48 @@ function buildSelects() {
 }
 
 // ═══════════════════════════════════════════════════════
+//  FUN FACT
+// ═══════════════════════════════════════════════════════
+let _currentOA = null, _currentOB = null;
+
+async function generateFunFact() {
+  if (!_currentOA || !_currentOB) return;
+
+  const btn = document.getElementById('funfactBtn');
+  const text = document.getElementById('funfactText');
+
+  btn.disabled = true;
+  text.className = 'funfact-loading';
+  text.textContent = 'Generating fact…';
+
+  try {
+    const response = await fetch('/api/funfact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        objectA: { name: _currentOA.name, type: _currentOA.type, radius: formatR(_currentOA.rKm) },
+        objectB: { name: _currentOB.name, type: _currentOB.type, radius: formatR(_currentOB.rKm) }
+      })
+    });
+
+    const data = await response.json();
+    if (data.fact) {
+      text.className = 'funfact-text';
+      text.textContent = data.fact;
+      btn.textContent = '↺ Generate Another';
+    } else {
+      text.className = 'funfact-text';
+      text.textContent = 'Could not generate a fact right now. Try again!';
+    }
+  } catch (err) {
+    text.className = 'funfact-text';
+    text.textContent = 'Could not reach the server. Try again!';
+  }
+
+  btn.disabled = false;
+}
+
+// ═══════════════════════════════════════════════════════
 //  SHARE
 // ═══════════════════════════════════════════════════════
 function copyShareLink() {
@@ -826,5 +1729,24 @@ if (_pA && _pB && OBJECTS.find(o=>o.id===_pA) && OBJECTS.find(o=>o.id===_pB)) {
   setTimeout(runCompare, 150);
 }
 </script>
-</body>
-</html>
+
+
+<div id="claude-static-indicator-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; padding: 6px 6px 6px 16px; background: rgb(250, 249, 245); border: 0.5px solid rgba(31, 30, 29, 0.3); border-radius: 14px; box-shadow: rgba(0, 0, 0, 0.15) 0px 40px 80px 0px; z-index: 2147483647; pointer-events: none; white-space: nowrap; user-select: none; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-right: 8px;">
+        <path d="M3.13946 10.6399L6.28757 8.87462L6.37405 8.73821L6.28757 8.6339H6.13189L5.60432 8.6018L3.80541 8.55366L2.24865 8.48947L0.735135 8.40923H0.492973L0.354595 8.32899L0.181622 8.1685L0.0345946 8.01605L0 7.85557L0.0345946 7.62287L0.138378 7.44634L0.224865 7.40622H0.354595L0.812973 7.44634L1.82486 7.51856L3.34703 7.62287L4.44541 7.68706L6.08 7.85557H6.33946L6.37405 7.75125L6.28757 7.68706L6.21838 7.62287L4.64432 6.55567L2.94054 5.4323L2.04973 4.78235L1.57405 4.45336L1.33189 4.14845L1.22811 3.92377L1.17622 3.69107L1.22811 3.47442L1.33189 3.28185L1.46162 3.13741L1.66054 2.99298H1.87676L2.24865 3.0331L2.39568 3.07322L2.99243 3.53059L4.26378 4.51755L5.92432 5.73721L6.16649 5.93781H6.27892V5.82548L6.16649 5.64092L5.26703 4.01204L4.30703 2.35105L3.87459 1.66098L3.76216 1.25176C3.7391 1.16082 3.69297 0.977332 3.69297 0.970913V0.762287L3.77946 0.505517L3.93513 0.240722L4.18595 0.0882648L4.4627 0H4.67892L4.83459 0.0240722L5.12865 0.0882648L5.4054 0.328987L5.82054 1.27583L6.48649 2.76028L7.52432 4.78235L7.82703 5.38415L7.99135 5.93781L8.05189 6.10632H8.15567V6.01003L8.24216 4.87061L8.39784 3.47442L8.55351 1.67703L8.6054 1.17151L8.85622 0.561685L8.9773 0.417252L9.21946 0.232698H9.35784L9.74703 0.417252L9.97189 0.665998L10.067 0.874624L10.0238 1.17151L9.83351 2.40722L9.46162 4.34102L9.21946 5.64092H9.35784L9.52216 5.47242L10.1795 4.60582L11.2778 3.22568L11.7622 2.68004L12.333 2.07823L12.6962 1.78937L13.0162 1.67703L13.3881 1.78937L13.7168 2.06219L13.8897 2.54363V2.76028L13.6649 3.32197L12.9557 4.22066L12.3676 4.98295L12.0043 5.56871L11.0011 7.02106V7.08526H11.1741L13.0768 6.67603L14.1059 6.49147L15.3341 6.28285L15.5762 6.34704L15.8876 6.53962L15.9481 6.80441L15.8876 7.12538L15.7319 7.34203L14.4173 7.66299L12.8778 7.97593L10.5854 8.51559C10.5705 8.51909 10.56 8.53236 10.56 8.54764C10.56 8.56468 10.573 8.57891 10.59 8.58044L11.6238 8.67402L12.0649 8.69809H13.1459L15.1611 8.85055L15.6886 9.19559L15.9481 9.39619L16 9.62086L15.9481 9.94985L15.8443 10.1023L15.4119 10.3029L15.1351 10.3591L14.0454 10.1023L11.4941 9.49248L10.6205 9.27583H10.4995V9.34804L11.2259 10.0622L12.5665 11.2658L14.2357 12.8225L14.3222 13.0953V13.2076L14.1059 13.5125L13.9243 13.5206L13.8811 13.4804L12.4108 12.3731L12.2984 12.325L11.84 11.8756L10.56 10.7924H10.4735V10.9047L10.7676 11.338L12.333 13.6891L12.4108 14.4112L12.2984 14.6439L11.8919 14.7884L11.667 14.7563L11.4508 14.7081L11.2605 14.5396L10.5254 13.4162L9.5827 11.9719L8.82162 10.672H8.79342C8.76039 10.672 8.73278 10.6972 8.7297 10.73L8.27676 15.5667L8.06919 15.8154L7.6454 16H7.58486L7.17838 15.6951L6.96216 15.1976L7.17838 14.2106L7.43784 12.9268L7.6454 11.9077L7.83567 10.6399L7.95187 10.2164C7.9548 10.2057 7.95069 10.1944 7.94161 10.1881C7.91157 10.1672 7.87034 10.1741 7.84878 10.2037L6.89297 11.5145L5.44 13.4804L4.28973 14.7081L4.01297 14.8205H3.80541L3.5373 14.5717V14.4514L3.58054 14.1304L3.84865 13.7372L5.44 11.7151L6.4 10.4554L7.01872 9.73222C7.04511 9.70139 7.04245 9.65523 7.0127 9.62763C7.00333 9.61894 6.98925 9.61773 6.97854 9.62471L2.75027 12.3811L1.99784 12.4774L1.66919 12.1725L1.71243 11.675L1.86811 11.5145L3.13946 10.6399Z" fill="#D97757"></path>
+      </svg>
+      <span style="vertical-align: middle; color: #141413; font-size: 14px; display: inline-block;">Claude is active in this tab group</span>
+      <div style="display: inline-block; width: 0.5px; height: 32px; background: rgba(31, 30, 29, 0.15); margin: 0 8px; vertical-align: middle;"></div>
+      <button id="claude-static-chat-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 6px; background: transparent; border: none; cursor: pointer; pointer-events: auto; vertical-align: middle; width: 32px; height: 32px; border-radius: 8px; transition: background 0.2s;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#141413" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; display: block;">
+          <path d="M10 2.5C14.1421 2.5 17.5 5.85786 17.5 10C17.5 14.1421 14.1421 17.5 10 17.5H3C2.79779 17.5 2.61549 17.3782 2.53809 17.1914C2.4607 17.0046 2.50349 16.7895 2.64648 16.6465L4.35547 14.9365C3.20124 13.6175 2.5 11.8906 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5ZM10 3.5C6.41015 3.5 3.5 6.41015 3.5 10C3.5 11.7952 4.22659 13.4199 5.40332 14.5967L5.46582 14.6729C5.52017 14.7544 5.5498 14.8508 5.5498 14.9502C5.5498 15.0828 5.49709 15.2099 5.40332 15.3037L4.20703 16.5H10C13.5899 16.5 16.5 13.5899 16.5 10C16.5 6.41015 13.5899 3.5 10 3.5ZM13.29 9.30371C13.3986 9.05001 13.6925 8.93174 13.9463 9.04004C14.2 9.14863 14.3183 9.44253 14.21 9.69629C13.8506 10.536 13.1645 11.25 12.25 11.25C11.6372 11.25 11.128 10.9289 10.75 10.4648C10.372 10.9289 9.86276 11.25 9.25 11.25C8.63724 11.25 8.12801 10.9289 7.75 10.4648C7.37198 10.9289 6.86276 11.25 6.25 11.25C5.97386 11.25 5.75 11.0261 5.75 10.75C5.75 10.4739 5.97386 10.25 6.25 10.25C6.58764 10.25 7.00448 9.97056 7.29004 9.30371L7.32422 9.2373C7.41431 9.09121 7.5749 9 7.75 9C7.9501 9 8.13123 9.11975 8.20996 9.30371L8.32227 9.53516C8.59804 10.0359 8.95442 10.25 9.25 10.25C9.58764 10.25 10.0045 9.97056 10.29 9.30371L10.3242 9.2373C10.4143 9.09121 10.5749 9 10.75 9C10.9501 9 11.1312 9.11975 11.21 9.30371L11.3223 9.53516C11.598 10.0359 11.9544 10.25 12.25 10.25C12.5876 10.25 13.0045 9.97056 13.29 9.30371Z"></path>
+        </svg>
+        <span id="claude-static-chat-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Arial, sans-serif;">Open chat</span>
+      </button>
+      <button id="claude-static-close-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 6px; background: transparent; border: none; cursor: pointer; pointer-events: auto; vertical-align: middle; width: 32px; height: 32px; margin-left: 4px; border-radius: 8px; transition: background 0.2s;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; display: block;">
+          <path d="M15.1464 4.14642C15.3417 3.95121 15.6582 3.95118 15.8534 4.14642C16.0486 4.34168 16.0486 4.65822 15.8534 4.85346L10.7069 9.99997L15.8534 15.1465C16.0486 15.3417 16.0486 15.6583 15.8534 15.8535C15.6826 16.0244 15.4186 16.0461 15.2245 15.918L15.1464 15.8535L9.99989 10.707L4.85338 15.8535C4.65813 16.0486 4.34155 16.0486 4.14634 15.8535C3.95115 15.6583 3.95129 15.3418 4.14634 15.1465L9.29286 9.99997L4.14634 4.85346C3.95129 4.65818 3.95115 4.34162 4.14634 4.14642C4.34154 3.95128 4.65812 3.95138 4.85338 4.14642L9.99989 9.29294L15.1464 4.14642Z" fill="#141413"></path>
+        </svg>
+        <span id="claude-static-close-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Arial, sans-serif;">Dismiss</span>
+      </button>
+    </div></body></html>
