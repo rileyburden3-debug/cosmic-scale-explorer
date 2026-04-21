@@ -159,6 +159,21 @@
   .cmp-desc { font-size:.66rem; color:var(--dim); line-height:1.9; }
   .cmp-desc strong { color:var(--text); }
   .scale-note { font-size:.55rem; color:rgba(74,240,255,.5); text-align:center; margin-top:10px; letter-spacing:.07em; }
+  .share-row {
+    display:flex; align-items:center; justify-content:flex-end;
+    border-top:1px solid rgba(74,240,255,.08); padding-top:12px;
+    margin-top:14px; gap:10px;
+  }
+  .share-label { font-size:.5rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); }
+  .share-btn {
+    font-family:'Orbitron',sans-serif; font-size:.55rem; letter-spacing:.1em;
+    padding:7px 14px; border:1px solid rgba(74,240,255,.3);
+    background:rgba(74,240,255,.07); color:var(--accent);
+    cursor:pointer; border-radius:3px; text-transform:uppercase;
+    display:flex; align-items:center; gap:6px; transition:all .2s;
+  }
+  .share-btn:hover { background:rgba(74,240,255,.18); box-shadow:0 0 12px rgba(74,240,255,.2); }
+  .share-btn.copied { border-color:var(--accent); background:rgba(74,240,255,.2); color:#fff; }
 
   /* ── GRID ── */
   .browser-wrap { position:relative; z-index:10; max-width:900px; margin:0 auto 50px; padding:0 16px; }
@@ -286,6 +301,10 @@
   <div class="cmp-ratio" id="cmpRatio"></div>
   <div class="cmp-desc" id="cmpDesc"></div>
   <div class="scale-note" id="scaleNote"></div>
+  <div class="share-row">
+    <span class="share-label">Share this comparison</span>
+    <button class="share-btn" id="shareBtn" onclick="copyShareLink()">🔗 Copy Link</button>
+  </div>
 </div>
 
 <div class="browser-wrap">
@@ -774,6 +793,21 @@ function buildSelects() {
       sel.appendChild(og);
     });
     sel.value = i===0?'earth':'betelgeuse';
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  SHARE
+// ═══════════════════════════════════════════════════════
+function copyShareLink() {
+  const btn = document.getElementById('shareBtn');
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '🔗 Copy Link';
+      btn.classList.remove('copied');
+    }, 2000);
   });
 }
 
