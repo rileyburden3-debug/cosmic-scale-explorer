@@ -600,6 +600,10 @@ function runCompare() {
   const oA = OBJECTS.find(o=>o.id===idA);
   const oB = OBJECTS.find(o=>o.id===idB);
   if (!oA||!oB) return;
+  const url = new URL(window.location.href);
+  url.searchParams.set('a', idA);
+  url.searchParams.set('b', idB);
+  window.history.replaceState({}, '', url);
 
   buildScaleView(oA, oB);
 
@@ -776,7 +780,17 @@ function buildSelects() {
 buildSelects();
 buildCatTabs();
 renderGrid();
-setTimeout(runCompare, 150);
+
+// Load shared URL params if present, otherwise run default compare
+const _params = new URLSearchParams(window.location.search);
+const _pA = _params.get('a'), _pB = _params.get('b');
+if (_pA && _pB && OBJECTS.find(o=>o.id===_pA) && OBJECTS.find(o=>o.id===_pB)) {
+  document.getElementById('selA').value = _pA;
+  document.getElementById('selB').value = _pB;
+  setTimeout(runCompare, 150);
+} else {
+  setTimeout(runCompare, 150);
+}
 </script>
 </body>
 </html>
